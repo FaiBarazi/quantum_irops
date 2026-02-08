@@ -5,6 +5,7 @@ description = "IROPS pipeline"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "airportsdata>=20260205",
     "jupyter>=1.1.1",
     "matplotlib>=3.10.8",
     "pandas>=3.0.0",
