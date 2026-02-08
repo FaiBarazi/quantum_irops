@@ -2,20 +2,17 @@ import polars as pl
 import airportsdata
 
 
-# For testing, ideally these need to be env vars and not hard coded.
-
-
 def get_airport_coord(affected_flights: pl.DataFrame) -> pl.DataFrame:
     iata_dict = airportsdata.load("IATA")
     df_iata = pl.from_dicts(list(iata_dict.values()))
     df_iata = df_iata.select(["iata", "lat", "lon"])
     affected_flights = affected_flights.join(
         df_iata, left_on="ORIG_CD", right_on="iata", how="left"
-    ).rename({"lat": "lat_origin", "lon": "lon_origin"})
+    ).rename({"lat": "ORIG_LAT", "lon": "ORIG_LONG"})
 
     affected_flights = affected_flights.join(
         df_iata, left_on="DEST_CD", right_on="iata", how="left"
-    ).rename({"lat": "lat_dist", "lon": "lon_dist"})
+    ).rename({"lat": "DEST_LAT", "lon": "DEST_LONG"})
 
     return affected_flights
 
